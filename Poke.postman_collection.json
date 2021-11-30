@@ -1,0 +1,60 @@
+{
+	"info": {
+		"_postman_id": "f49c1322-3b70-4636-b097-a9fd8e7506ec",
+		"name": "Poke",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "https://pokeapi.co/api/v2/pokemon/{{id}}/",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"const jsonBody = pm.response.json();\r",
+							"const PokemonName = jsonBody.forms[0][\"name\"];\r",
+							"\r",
+							"pm.test(PokemonName, () => {\r",
+							"    const jsonBody = pm.response.json();\r",
+							"    const name = jsonBody.types[0][\"type\"].name;\r",
+							"    pm.expect(name).to.eql(\"normal\");\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//get the 'value' field from the data file for this request run\r",
+							"pm.iterationData.get(\"id\")"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://pokeapi.co/api/v2/pokemon/{{id}}",
+					"protocol": "https",
+					"host": [
+						"pokeapi",
+						"co"
+					],
+					"path": [
+						"api",
+						"v2",
+						"pokemon",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
